@@ -7,6 +7,9 @@ const router = express.Router();
  * For example, below
  */
 router.use("/ping", TestRoute);
-router.use("/some-another-route", () => {});
+
+router.use("/some-another-route", (req, res) => {
+  res.json({ message: "Some route" });
+});
 
 export default router;
