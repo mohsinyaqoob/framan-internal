@@ -1,14 +1,14 @@
 import express from "express";
 import dotenv from "dotenv";
 import routes from "./routes/index.route";
+import bootstrap from "./bootstrap";
 
 dotenv.config();
-const app = express();
-const port = process.env.PORT;
 
-app.use("/", routes);
+const app = express();
 app.use(express.json());
 
-app.listen(port, () => {
-  return console.log(`Express is listening at http://localhost:${port}`);
-});
+// Create all routes in ./routes/index.ts
+app.use("/", routes);
+
+bootstrap(app);
