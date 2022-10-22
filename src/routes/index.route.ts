@@ -1,5 +1,6 @@
 import express from "express";
 import authMiddleware from "../middleware/auth.middleware";
+import { ChannelRouter } from "./channel.route";
 import TestRoute from "./test.route";
 const router = express.Router();
 
@@ -8,9 +9,6 @@ const router = express.Router();
  * For example, below
  */
 router.use("/", authMiddleware, TestRoute);
-
-router.use("/some-another-route", (req, res) => {
-  res.json({ message: "Some route" });
-});
+router.use("/channels", authMiddleware, ChannelRouter);
 
 export default router;
