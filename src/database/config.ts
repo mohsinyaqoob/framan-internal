@@ -22,14 +22,23 @@ const sqlConfig = {
 const connect = async () => {
   return new Promise(async (resolve, reject) => {
     try {
-      await sql.connect(sqlConfig);
-      // const result = await sql.query`select * from Gender`;
+      sql.pool = await sql.connect(sqlConfig);
       console.log("Database connectivity established");
       resolve("Database Connected ✔");
     } catch (err) {
+      console.log(err);
       reject("Database connection failed ❌");
     }
   });
+};
+
+export const runQuery = async (query) => {
+  try {
+    // const result = await pool.request().query(query);
+    // return result.recordsets;
+  } catch (error) {
+    throw new Error(error);
+  }
 };
 
 export default connect;

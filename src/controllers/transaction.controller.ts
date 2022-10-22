@@ -6,7 +6,7 @@ export const getTransactionTypes = async (req: Request, res: Response) => {
   try {
     const { directChannelId } = req.body;
     if (!directChannelId) {
-      res.status(500).json({
+      return res.status(500).json({
         status: 1,
         data: { message: "Please provide directChannelID" },
       });

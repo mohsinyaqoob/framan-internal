@@ -6,4 +6,4 @@ const router = express.Router();
 
 router.post("/transaction-types", getTransactionTypes);
 
-export const TransactionRoute = router;
+export const TransactionRouter = router;
