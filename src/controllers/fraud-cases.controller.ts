@@ -1,6 +1,9 @@
 import { Response, Request } from "express";
-import { getOne, getAll, addOne } from "../models/fraud-case.model";
-import { isValidAddFraudRequest } from "../utils/validate.util";
+import { getOne, getAll, addOne, updateOne } from "../models/fraud-case.model";
+import {
+  isValidAddFraudRequest,
+  isValidUpdateFraudRequest,
+} from "../utils/validate.util";
 
 export const getOneFraudCase = async (req: Request, res: Response) => {
   try {
@@ -56,6 +59,49 @@ export const addFraudCase = async (req, res) => {
     // This could be handled in a better way later, maybe
     // String comparison is highly error-prone
     if (fraudCase.ActionStatus !== "Inserted") {
+      return res.status(400).json({
+        status: 1,
+        data: {
+          message: fraudCase.ActionMessage,
+        },
+      });
+    }
+
+    res.status(200).json({
+      status: 0,
+      data: {
+        message: fraudCase.ActionMessage,
+        fraudCase,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: 1, data: { message: error.message } });
+  }
+};
+
+export const updateFraudCase = async (req, res) => {
+  try {
+    const data = req.body;
+    const { isValid, errors } = isValidUpdateFraudRequest(data);
+    if (!isValid) {
+      return res.status(400).json({
+        status: 1,
+        data: {
+          message: "Please provide all required params",
+          errors,
+        },
+      });
+    }
+
+    const inserted: any = await updateOne(data);
+    const fraudCase = inserted[0];
+
+    console.log(fraudCase);
+
+    // This could be handled in a better way later, maybe
+    // String comparison is highly error-prone
+    if (fraudCase.ActionStatus !== "Updated") {
       return res.status(400).json({
         status: 1,
         data: {
