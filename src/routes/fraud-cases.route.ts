@@ -1,8 +1,14 @@
 import express from "express";
-import { getFraudCases } from "../controllers/fraud-cases.controller";
+import {
+  addFraudCase,
+  getAllFraudCases,
+  getOneFraudCase,
+} from "../controllers/fraud-cases.controller";
 
 const router = express.Router();
 
-router.post("/", getFraudCases);
+router.post("/get-one", getOneFraudCase);
+router.post("/get-all", getAllFraudCases);
+router.post("/add", addFraudCase);
 
 export const FraudCasesRouter = router;

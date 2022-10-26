@@ -1,11 +1,10 @@
 import express from "express";
-import { runQuery } from "../database/config";
 import authMiddleware from "../middleware/auth.middleware";
-import { getAllFraudCases } from "../models/fraud-case.model";
 import { ChannelRouter } from "./channel.route";
 import { FraudCasesRouter } from "./fraud-cases.route";
-import TestRoute from "./test.route";
 import { TransactionRouter } from "./transaction.route";
+import TestRoute from "./test.route";
+
 const router = express.Router();
 
 /**
