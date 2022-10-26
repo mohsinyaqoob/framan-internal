@@ -1,6 +1,7 @@
 import express from "express";
 import {
   addFraudCase,
+  deleteFraudCase,
   getAllFraudCases,
   getOneFraudCase,
   updateFraudCase,
@@ -12,6 +13,6 @@ router.post("/get-one", getOneFraudCase);
 router.post("/get-all", getAllFraudCases);
 router.post("/add", addFraudCase);
 router.post("/update", updateFraudCase);
-router.post("/delete", addFraudCase);
+router.post("/delete", deleteFraudCase);
 
 export const FraudCasesRouter = router;

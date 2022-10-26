@@ -148,3 +148,46 @@ export const updateOne = async (data) => {
     throw new Error(error);
   }
 };
+
+export const deleteOneFraudCase = async (
+  fraudCaseId,
+  banksCaseSerial,
+  samaCaseSerial
+) => {
+  try {
+    let result = await sql.query(
+      `
+      EXEC uspFraudCase_CRUD
+      @Action='DELETE',
+      @FraudCaseID=${fraudCaseId},
+      @SAMACaseSerialNumber='${samaCaseSerial}',
+      @BanksCaseSerialNumber='${banksCaseSerial}',
+      @FraudDetectionMechanismId=${null},
+      @StartDate=${null},
+      @StartIncidentTime=${null},
+      @NumberOfFraudTransaction=${null},
+      @TotalAmount=${null},
+      @FrozenHeldAmount=${null},
+      @UnRefundedUnFrozenUnHeldAmount=${null},
+      @ComplaintChannelId=${null},
+      @ComplaintDate=${null},
+      @ComplaintTime=${null},
+      @IsLawInforcmentNotified=${null},
+      @ClientIdentifier=${null},
+      @FraudMethodOther=${null},
+      @FraudMethodId=${null},
+      @ImporsonatedName=${null},
+      @ReachMethodId=${null},
+      @ReachMethodOther=${null},
+      @ReachMethodIdentifier=${null},
+      @IsDraft=${null},
+      @LoggedInUserID=${null},
+      @CreateSource=${null},
+      @BatchID=${null}
+      `
+    );
+    return result.recordset;
+  } catch (error) {
+    throw new Error(error);
+  }
+};

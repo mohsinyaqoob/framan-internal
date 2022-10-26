@@ -1,5 +1,11 @@
 import { Response, Request } from "express";
-import { getOne, getAll, addOne, updateOne } from "../models/fraud-case.model";
+import {
+  getOne,
+  getAll,
+  addOne,
+  updateOne,
+  deleteOneFraudCase,
+} from "../models/fraud-case.model";
 import {
   isValidAddFraudRequest,
   isValidUpdateFraudRequest,
@@ -119,6 +125,48 @@ export const updateFraudCase = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    res.status(500).json({ status: 1, data: { message: error.message } });
+  }
+};
+
+export const deleteFraudCase = async (req, res) => {
+  try {
+    const { fraudCaseId, banksCaseSerialNumber, samaCaseSerialNumber } =
+      req.body;
+    if (!banksCaseSerialNumber || !samaCaseSerialNumber || !fraudCaseId) {
+      return res.status(400).json({
+        status: 1,
+        data: {
+          message:
+            "Please provide a valid fraudCaseId, banksCaseSerialNumber and samaCaseSerialNumber",
+        },
+      });
+    }
+
+    const deleted: any = await deleteOneFraudCase(
+      fraudCaseId,
+      banksCaseSerialNumber,
+      samaCaseSerialNumber
+    );
+
+    const fraudCase = deleted[0];
+    if (fraudCase.ActionStatus !== "Deleted") {
+      return res.status(400).json({
+        status: 1,
+        data: {
+          message: fraudCase.ActionMessage,
+        },
+      });
+    }
+
+    res.status(200).json({
+      status: 0,
+      data: {
+        message: fraudCase.ActionMessage,
+      },
+    });
+  } catch (error) {
+    console.log(error.message);
     res.status(500).json({ status: 1, data: { message: error.message } });
   }
 };
