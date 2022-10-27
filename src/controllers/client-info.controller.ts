@@ -1,5 +1,8 @@
-import { addOne, getAll } from "../models/client-info.model";
-import { isValidAddClientInfoRequest } from "../utils/validate.util";
+import { addOne, getAll, updateOne } from "../models/client-info.model";
+import {
+  isValidAddClientInfoRequest,
+  isValidUpdateClientInfoRequest,
+} from "../utils/validate.util";
 
 export const addClientInfo = async (req, res) => {
   try {
@@ -49,6 +52,49 @@ export const getAllClientInfo = async (req, res) => {
       data: { count: clientInfo.length, clientInfo },
     });
   } catch (error) {
+    res.status(500).json({ status: 1, data: { message: error.message } });
+  }
+};
+
+export const updateClientInfo = async (req, res) => {
+  try {
+    const data = req.body;
+    const { isValid, errors } = isValidUpdateClientInfoRequest(data);
+    if (!isValid) {
+      return res.status(400).json({
+        status: 1,
+        data: {
+          message: "Please provide all required params",
+          errors,
+        },
+      });
+    }
+
+    const updated = await updateOne(data);
+    const clientInfo = updated[0];
+
+    console.log(updated);
+
+    // This could be handled in a better way later, maybe
+    // String comparison is highly error-prone
+    if (clientInfo.ActionStatus !== "Updated") {
+      return res.status(400).json({
+        status: 1,
+        data: {
+          message: clientInfo.ActionMessage,
+        },
+      });
+    }
+
+    res.status(200).json({
+      status: 0,
+      data: {
+        message: clientInfo.ActionMessage,
+        clientInfo,
+      },
+    });
+  } catch (error) {
+    console.log(error);
     res.status(500).json({ status: 1, data: { message: error.message } });
   }
 };
