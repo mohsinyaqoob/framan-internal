@@ -103,8 +103,6 @@ export const updateFraudCase = async (req, res) => {
     const inserted: any = await updateOne(data);
     const fraudCase = inserted[0];
 
-    console.log(fraudCase);
-
     // This could be handled in a better way later, maybe
     // String comparison is highly error-prone
     if (fraudCase.ActionStatus !== "Updated") {

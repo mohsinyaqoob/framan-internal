@@ -4,16 +4,17 @@ import { ChannelRouter } from "./channel.route";
 import { FraudCasesRouter } from "./fraud-cases.route";
 import { TransactionRouter } from "./transaction.route";
 import TestRoute from "./test.route";
+import { ClientInfoRouter } from "./client-info.route";
 
 const router = express.Router();
 
-/**
- * Add all routes below
- * For example, below
- */
+// Form Step 1:
 router.use("/", authMiddleware, TestRoute);
 router.use("/channels", authMiddleware, ChannelRouter);
 router.use("/transactions", authMiddleware, TransactionRouter);
 router.use("/fraud-cases", authMiddleware, FraudCasesRouter);
+
+// Form Step 2:
+router.use("/client-info", authMiddleware, ClientInfoRouter);
 
 export default router;

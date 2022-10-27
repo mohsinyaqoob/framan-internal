@@ -84,3 +84,38 @@ export const isValidUpdateFraudRequest = (data) => {
 
   return { isValid: false, errors: validationErrors };
 };
+
+export const isValidAddClientInfoRequest = (data) => {
+  const requiredKeys = [
+    "clientDetailID",
+    "samaCaseSerialNumber",
+    "banksCaseSerialNumber",
+    "clientIdentifier",
+    "clientTypeId",
+    "clientFullName",
+    "registeredPhoneNumber",
+    "clientCityAddress",
+    "clientRegionId",
+    "genderId",
+    "dob",
+    "nationality",
+    "isDraft",
+    "loggedInUserID",
+    "createSource",
+    "batchID",
+  ];
+
+  let validationErrors = [];
+
+  requiredKeys.forEach((key) => {
+    if (data[key] === undefined) {
+      validationErrors.push(`${key} is required`);
+    }
+  });
+
+  if (validationErrors.length === 0) {
+    return { isValid: true };
+  }
+
+  return { isValid: false, errors: validationErrors };
+};
