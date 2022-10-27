@@ -1,6 +1,7 @@
 import express from "express";
 import {
   addClientInfo,
+  deleteOneClientInfo,
   getAllClientInfo,
   getOneClientInfo,
   updateClientInfo,
@@ -12,6 +13,6 @@ router.post("/add", addClientInfo);
 router.post("/get-all", getAllClientInfo);
 router.post("/get-one", getOneClientInfo);
 router.post("/update", updateClientInfo);
-router.post("/delete", updateClientInfo);
+router.post("/delete", deleteOneClientInfo);
 
 export const ClientInfoRouter = router;
