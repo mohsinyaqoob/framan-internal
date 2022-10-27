@@ -1,6 +1,7 @@
-import { addOne, getAll, updateOne } from "../models/client-info.model";
+import { addOne, getAll, getOne, updateOne } from "../models/client-info.model";
 import {
   isValidAddClientInfoRequest,
+  isValidGetOneClientInfoRequest,
   isValidUpdateClientInfoRequest,
 } from "../utils/validate.util";
 
@@ -73,8 +74,6 @@ export const updateClientInfo = async (req, res) => {
     const updated = await updateOne(data);
     const clientInfo = updated[0];
 
-    console.log(updated);
-
     // This could be handled in a better way later, maybe
     // String comparison is highly error-prone
     if (clientInfo.ActionStatus !== "Updated") {
@@ -90,6 +89,35 @@ export const updateClientInfo = async (req, res) => {
       status: 0,
       data: {
         message: clientInfo.ActionMessage,
+        clientInfo,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: 1, data: { message: error.message } });
+  }
+};
+
+export const getOneClientInfo = async (req, res) => {
+  try {
+    const data = req.body;
+    const { isValid, errors } = isValidGetOneClientInfoRequest(data);
+
+    if (!isValid) {
+      return res.status(400).json({
+        status: 1,
+        data: {
+          message: "Please provide all required params",
+          errors,
+        },
+      });
+    }
+
+    const clientInfo: any = await getOne(data);
+
+    res.status(200).json({
+      status: 0,
+      data: {
         clientInfo,
       },
     });

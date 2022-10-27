@@ -162,3 +162,36 @@ export const updateOne = async (data) => {
     throw new Error(error);
   }
 };
+
+export const getOne = async (data) => {
+  try {
+    let params = [
+      {
+        name: "ClientDetailID",
+        value: data.clientDetailId,
+        type: sql.Int,
+      },
+      {
+        name: "SAMACaseSerialNumber",
+        value: data.samaCaseSerialNumber,
+        type: sql.NVarChar,
+      },
+      {
+        name: "BanksCaseSerialNumber",
+        value: data.banksCaseSerialNumber,
+        type: sql.NVarChar,
+      },
+      { name: "Action", value: "SELECT", type: sql.VarChar },
+    ];
+
+    const pool = sql.pool;
+    const result1 = await pool.request();
+    params.forEach((param) =>
+      result1.input(param.name, param.type, param.value)
+    );
+    const result = await result1.execute("uspFraudCaseClientDetail_CRUD");
+    return result.recordset;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
