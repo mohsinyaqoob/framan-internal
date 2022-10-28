@@ -197,3 +197,68 @@ export const isValidDeleteOneClientInfoRequest = (data) => {
 
   return { isValid: false, errors: validationErrors };
 };
+
+export const isValidAddOneAccountDetailRequest = (data) => {
+  const requiredKeys = [
+    "samaCaseSerialNumber",
+    "banksCaseSerialNumber",
+    "accountIdentifier",
+    "clientAccountTypeId",
+    "accountOpeningDate",
+    "accountTypeId",
+    "accountSegmentID",
+    "accountOpeningMechanismId",
+    "authenticatedAccount",
+    "isDraft",
+    "loggedInUserID",
+    "createSource",
+    "batchID",
+  ];
+
+  let validationErrors = [];
+
+  requiredKeys.forEach((key) => {
+    if (data[key] === undefined) {
+      validationErrors.push(`${key} is required`);
+    }
+  });
+
+  if (validationErrors.length === 0) {
+    return { isValid: true };
+  }
+
+  return { isValid: false, errors: validationErrors };
+};
+
+export const isValidUpdateOneAccountDetailRequest = (data) => {
+  const requiredKeys = [
+    "accountDetailId",
+    "samaCaseSerialNumber",
+    "banksCaseSerialNumber",
+    "accountIdentifier",
+    "clientAccountTypeId",
+    "accountOpeningDate",
+    "accountTypeId",
+    "accountSegmentID",
+    "accountOpeningMechanismId",
+    "authenticatedAccount",
+    "isDraft",
+    "loggedInUserID",
+    "createSource",
+    "batchID",
+  ];
+
+  let validationErrors = [];
+
+  requiredKeys.forEach((key) => {
+    if (data[key] === undefined) {
+      validationErrors.push(`${key} is required`);
+    }
+  });
+
+  if (validationErrors.length === 0) {
+    return { isValid: true };
+  }
+
+  return { isValid: false, errors: validationErrors };
+};
