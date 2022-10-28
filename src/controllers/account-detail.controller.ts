@@ -1,7 +1,14 @@
-import { addOne, updateOne, deleteOne } from "../models/account-detail.model";
+import {
+  addOne,
+  updateOne,
+  deleteOne,
+  getAll,
+  getOne,
+} from "../models/account-detail.model";
 import {
   isValidAddOneAccountDetailRequest,
   isValidDeleteAccountDetailRequest,
+  isValidGetOneAccountDetailsRequest,
   isValidUpdateOneAccountDetailRequest,
 } from "../utils/validate.util";
 
@@ -106,6 +113,50 @@ export const deleteAccountDetail = async (req, res) => {
       status: 0,
       data: {
         deletedAccountDetails,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: 1, data: { message: error.message } });
+  }
+};
+
+export const getAllAccountDetails = async (req, res) => {
+  try {
+    const accountDetails = await getAll();
+
+    res.status(200).json({
+      status: 0,
+      data: {
+        accountDetails,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: 1, data: { message: error.message } });
+  }
+};
+
+export const getOneAccountDetail = async (req, res) => {
+  try {
+    const data = req.body;
+    const { isValid, errors } = isValidGetOneAccountDetailsRequest(data);
+    if (!isValid) {
+      return res.status(400).json({
+        status: 1,
+        data: {
+          message: "Please provide all required params",
+          errors,
+        },
+      });
+    }
+
+    const accountDetail = await getOne(data);
+
+    res.status(200).json({
+      status: 0,
+      data: {
+        accountDetail,
       },
     });
   } catch (error) {
