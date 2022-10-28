@@ -262,3 +262,25 @@ export const isValidUpdateOneAccountDetailRequest = (data) => {
 
   return { isValid: false, errors: validationErrors };
 };
+
+export const isValidDeleteAccountDetailRequest = (data) => {
+  const requiredKeys = [
+    "accountDetailId",
+    "samaCaseSerialNumber",
+    "banksCaseSerialNumber",
+  ];
+
+  let validationErrors = [];
+
+  requiredKeys.forEach((key) => {
+    if (data[key] === undefined) {
+      validationErrors.push(`${key} is required`);
+    }
+  });
+
+  if (validationErrors.length === 0) {
+    return { isValid: true };
+  }
+
+  return { isValid: false, errors: validationErrors };
+};

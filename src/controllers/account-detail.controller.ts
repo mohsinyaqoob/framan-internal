@@ -1,6 +1,7 @@
-import { addOne, updateOne } from "../models/account-detail.model";
+import { addOne, updateOne, deleteOne } from "../models/account-detail.model";
 import {
   isValidAddOneAccountDetailRequest,
+  isValidDeleteAccountDetailRequest,
   isValidUpdateOneAccountDetailRequest,
 } from "../utils/validate.util";
 
@@ -77,6 +78,34 @@ export const updateAccountDetail = async (req, res) => {
       data: {
         message: accountDetail.ActionMessage,
         accountDetail,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: 1, data: { message: error.message } });
+  }
+};
+
+export const deleteAccountDetail = async (req, res) => {
+  try {
+    const data = req.body;
+    const { isValid, errors } = isValidDeleteAccountDetailRequest(data);
+    if (!isValid) {
+      return res.status(400).json({
+        status: 1,
+        data: {
+          message: "Please provide all required params",
+          errors,
+        },
+      });
+    }
+
+    const deletedAccountDetails = await deleteOne(data);
+
+    res.status(200).json({
+      status: 0,
+      data: {
+        deletedAccountDetails,
       },
     });
   } catch (error) {
