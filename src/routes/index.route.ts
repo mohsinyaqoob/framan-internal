@@ -5,11 +5,13 @@ import { FraudCasesRouter } from "./fraud-cases.route";
 import { TransactionRouter } from "./transaction.route";
 import TestRoute from "./test.route";
 import { ClientInfoRouter } from "./client-info.route";
+import { OtherDataRouter } from "./other-data.route";
 
 const router = express.Router();
 
 // Form Step 1:
-router.use("/", authMiddleware, TestRoute);
+router.use("/", authMiddleware, OtherDataRouter);
+
 router.use("/channels", authMiddleware, ChannelRouter);
 router.use("/transactions", authMiddleware, TransactionRouter);
 router.use("/fraud-cases", authMiddleware, FraudCasesRouter);
