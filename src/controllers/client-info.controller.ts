@@ -151,8 +151,6 @@ export const deleteOneClientInfo = async (req, res) => {
 
     const clientInfo: any = await deleteOne(data);
 
-    console.log(clientInfo);
-
     res.status(200).json({
       status: 0,
       data: {
