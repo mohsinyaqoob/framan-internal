@@ -302,3 +302,47 @@ export const isValidGetOneAccountDetailsRequest = (data) => {
 
   return { isValid: false, errors: validationErrors };
 };
+
+export const isValidAddOneDirectChannel = (data) => {
+  const requiredKeys = [
+    "caseDirectChanneld",
+    "samaCaseSerialNumber",
+    "banksCaseSerialNumber",
+    "transactionId",
+    "trustedDevice",
+    "applicationId",
+    "deviceId",
+    "accessedCountryCode",
+    "eventDate",
+    "eventTime",
+    "complaintChannelId",
+    "transactionTypeId",
+    "transactionTypeOther",
+    "transactionAmount",
+    "frozenHeldAmount",
+    "unRefundedUnFrozenUnHeldAmount",
+    "beneficiaryId",
+    "beneficiaryEntityId",
+    "beneficiaryEntityOther",
+    "beneficiaryPossessionTypeId",
+    "possessionId",
+    "isDraft",
+    "loggedInUserId",
+    "createSource",
+    "batchId",
+  ];
+
+  let validationErrors = [];
+
+  requiredKeys.forEach((key) => {
+    if (data[key] === undefined) {
+      validationErrors.push(`${key} is required`);
+    }
+  });
+
+  if (validationErrors.length === 0) {
+    return { isValid: true };
+  }
+
+  return { isValid: false, errors: validationErrors };
+};

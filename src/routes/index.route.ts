@@ -1,6 +1,6 @@
 import express from "express";
 import authMiddleware from "../middleware/auth.middleware";
-import { ChannelRouter } from "./channel.route";
+import { DirectChannelRouter } from "./direct-channel.route";
 import { FraudCasesRouter } from "./fraud-cases.route";
 import { TransactionRouter } from "./transaction.route";
 import TestRoute from "./test.route";
@@ -13,7 +13,7 @@ const router = express.Router();
 // Form Step 1:
 router.use("/", authMiddleware, OtherDataRouter);
 
-router.use("/channels", authMiddleware, ChannelRouter);
+router.use("/direct-channel", authMiddleware, DirectChannelRouter);
 router.use("/transactions", authMiddleware, TransactionRouter);
 router.use("/fraud-cases", authMiddleware, FraudCasesRouter);
 
