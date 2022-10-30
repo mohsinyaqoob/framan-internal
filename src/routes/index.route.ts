@@ -7,6 +7,8 @@ import TestRoute from "./test.route";
 import { ClientInfoRouter } from "./client-info.route";
 import { OtherDataRouter } from "./other-data.route";
 import { AccountDetailRouter } from "./account-detail.route";
+import { FinalChannelRouter } from "./final-channel.route";
+
 
 const router = express.Router();
 
@@ -16,6 +18,8 @@ router.use("/", authMiddleware, OtherDataRouter);
 router.use("/direct-channel", authMiddleware, DirectChannelRouter);
 router.use("/transactions", authMiddleware, TransactionRouter);
 router.use("/fraud-cases", authMiddleware, FraudCasesRouter);
+router.use("/final-channel", authMiddleware, FinalChannelRouter);
+
 
 // Form Step 2:
 router.use("/client-info", authMiddleware, ClientInfoRouter);
