@@ -312,3 +312,150 @@ export const updateOne = async (data) => {
     throw new Error(error);
   }
 };
+
+export const getOne = async (data) => {
+  try {
+    const params = [
+      {
+        name: "CaseDirectChannelID",
+        value: null,
+        type: sql.Int,
+      },
+      {
+        name: "SAMACaseSerialNumber",
+        value: data.samaCaseSerialNumber,
+        type: sql.NVarChar,
+      },
+      {
+        name: "BanksCaseSerialNumber",
+        value: data.banksCaseSerialNumber,
+        type: sql.NVarChar,
+      },
+      {
+        name: "TransactionID",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "TrustedDevice",
+        value: null,
+        type: sql.Int,
+      },
+      {
+        name: "ApplicationID",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "DeviceID",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "AccessedCountryCode",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "EventDate",
+        value: null,
+        type: sql.Date,
+      },
+      {
+        name: "EventTime",
+        value: null,
+        type: sql.VarChar,
+      },
+      {
+        name: "ComplaintChannelId",
+        value: null,
+        type: sql.Int,
+      },
+      {
+        name: "TransactionTypeId",
+        value: null,
+        type: sql.Int,
+      },
+      {
+        name: "TransactionTypeOther",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "TransactionAmount",
+        value: null,
+        type: sql.Numeric,
+      },
+      {
+        name: "FrozenHeldAmount",
+        value: null,
+        type: sql.Numeric,
+      },
+      {
+        name: "UnRefundedUnFrozenUnHGeldAmount",
+        value: null,
+        type: sql.Numeric,
+      },
+      {
+        name: "BeneficiaryID",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "BeneficiaryEntityId",
+        value: null,
+        type: sql.Int,
+      },
+      {
+        name: "BeneficiaryEntityOther",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "BeneficiaryPossessionTypeId",
+        value: null,
+        type: sql.Int,
+      },
+      {
+        name: "PossessionID",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "IsDraft",
+        value: null,
+        type: sql.Bit,
+      },
+      {
+        name: "LoggedInUserID",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "CreateSource",
+        value: null,
+        type: sql.VarChar,
+      },
+      {
+        name: "BatchID",
+        value: null,
+        type: sql.UniqueIdentifier,
+      },
+      {
+        name: "Action",
+        value: "SELECT",
+        type: sql.VarChar,
+      },
+    ];
+
+    const pool = sql.pool;
+    const result1 = await pool.request();
+    params.forEach((param) =>
+      result1.input(param.name, param.type, param.value)
+    );
+    const result = await result1.execute("uspFraudCaseDirectChannel_CRUD");
+    return result.recordset;
+  } catch (error) {
+    throw new Error(error);
+  }
+};

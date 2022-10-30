@@ -1,7 +1,13 @@
 import { Response, Request } from "express";
-import { addOne, getAll, updateOne } from "../models/direct-channel.model";
+import {
+  addOne,
+  getAll,
+  getOne,
+  updateOne,
+} from "../models/direct-channel.model";
 import {
   isValidAddOneDirectChannel,
+  isValidGetOneDirectChanel,
   isValidUpdateOneDirectChannel,
 } from "../utils/validate.util";
 
@@ -92,6 +98,34 @@ export const updateOneDirectChannel = async (req, res) => {
       data: {
         message: accountDetail.ActionMessage,
         accountDetail,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: 1, data: { message: error.message } });
+  }
+};
+
+export const getOneDirectChannel = async (req, res) => {
+  try {
+    const data = req.body;
+    const { isValid, errors } = isValidGetOneDirectChanel(data);
+    if (!isValid) {
+      return res.status(400).json({
+        status: 1,
+        data: {
+          message: "Please provide all required params",
+          errors,
+        },
+      });
+    }
+
+    const directChannel = await getOne(data);
+
+    res.status(200).json({
+      status: 0,
+      data: {
+        directChannel,
       },
     });
   } catch (error) {
