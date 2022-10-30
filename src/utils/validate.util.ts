@@ -346,3 +346,102 @@ export const isValidAddOneDirectChannel = (data) => {
 
   return { isValid: false, errors: validationErrors };
 };
+
+export const isValidAddFinalChannel = (data) => {
+  const requiredKeys = [
+    "samaCaseSerialNumber",
+    "banksCaseSerialNumber",
+    "transactionId",
+    "eventDate",
+    "eventTime",
+    "beneficiaryEntityId",
+    "beneficiaryEntityOther",
+    "cashOutMethodId",
+    "cashOutMethodOther",
+    "totalAmount",
+    "frozenHeldAmount",
+    "refundedAmount",
+    "frozenHeldAmount",
+    "unRefundedUnFrozenUnheldAmount",
+    "cashoutTxnSourceCountry",
+    "merchantName",
+    "beneficiaryId",
+    "isDraft",
+    "loggedInUserID",
+    "createSource",
+    "batchId",
+  ];
+
+  let validationErrors = [];
+
+  requiredKeys.forEach((key) => {
+    if (data[key] === undefined) {
+      validationErrors.push(`${key} is required`);
+    }
+  });
+
+  if (validationErrors.length === 0) {
+    return { isValid: true };
+  }
+
+  return { isValid: false, errors: validationErrors };
+};
+
+export const isValidUpdateFinalChannel = (data) => {
+  const requiredKeys = [
+    "caseFinalChannelId",
+    "samaCaseSerialNumber",
+    "banksCaseSerialNumber",
+    "transactionId",
+    "eventDate",
+    "eventTime",
+    "beneficiaryEntityId",
+    "beneficiaryEntityOther",
+    "cashOutMethodId",
+    "cashOutMethodOther",
+    "totalAmount",
+    "frozenHeldAmount",
+    "refundedAmount",
+    "frozenHeldAmount",
+    "unRefundedUnFrozenUnheldAmount",
+    "cashoutTxnSourceCountry",
+    "merchantName",
+    "beneficiaryId",
+    "isDraft",
+    "loggedInUserID",
+    "createSource",
+    "batchId",
+  ];
+
+  let validationErrors = [];
+
+  requiredKeys.forEach((key) => {
+    if (data[key] === undefined) {
+      validationErrors.push(`${key} is required`);
+    }
+  });
+
+  if (validationErrors.length === 0) {
+    return { isValid: true };
+  }
+
+  return { isValid: false, errors: validationErrors };
+};
+
+export const isValidGetOneFinalChannel = (data) => {
+  const requiredKeys = ["samaCaseSerialNumber", "banksCaseSerialNumber"];
+
+  let validationErrors = [];
+
+  requiredKeys.forEach((key) => {
+    if (data[key] === undefined) {
+      validationErrors.push(`${key} is required`);
+    }
+  });
+
+  if (validationErrors.length === 0) {
+    return { isValid: true };
+  }
+
+  return { isValid: false, errors: validationErrors };
+};
