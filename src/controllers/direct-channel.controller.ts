@@ -4,6 +4,7 @@ import {
   getAll,
   getOne,
   updateOne,
+  _getAll,
 } from "../models/direct-channel.model";
 import {
   isValidAddOneDirectChannel,
@@ -13,7 +14,7 @@ import {
 
 export const getDirectChannels = async (req: Request, res: Response) => {
   try {
-    const directChannels = await getAll();
+    const directChannels = await _getAll();
     res.status(200).json({
       status: 0,
       data: { count: directChannels.length, directChannels },
@@ -126,6 +127,22 @@ export const getOneDirectChannel = async (req, res) => {
       status: 0,
       data: {
         directChannel,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: 1, data: { message: error.message } });
+  }
+};
+
+export const getAllDirectChannels = async (req, res) => {
+  try {
+    const directChannels = await getAll();
+
+    res.status(200).json({
+      status: 0,
+      data: {
+        directChannels,
       },
     });
   } catch (error) {

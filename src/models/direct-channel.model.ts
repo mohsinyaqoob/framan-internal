@@ -1,6 +1,6 @@
 import sql from "mssql";
 
-export const getAll = async () => {
+export const _getAll = async () => {
   try {
     const result = await sql.query`SELECT * FROM DirectChannel`;
     return result.recordset;
@@ -29,122 +29,122 @@ export const addOne = async (data) => {
       },
       {
         name: "SAMACaseSerialNumber",
-        value: data.samaCaseSerialNumber,
+        value: null,
         type: sql.NVarChar,
       },
       {
         name: "BanksCaseSerialNumber",
-        value: data.banksCaseSerialNumber,
+        value: null,
         type: sql.NVarChar,
       },
       {
         name: "TransactionID",
-        value: data.transactionId,
+        value: null,
         type: sql.NVarChar,
       },
       {
         name: "TrustedDevice",
-        value: data.trustedDevice,
+        value: null,
         type: sql.Int,
       },
       {
         name: "ApplicationID",
-        value: data.applicationId,
+        value: null,
         type: sql.NVarChar,
       },
       {
         name: "DeviceID",
-        value: data.deviceId,
+        value: null,
         type: sql.NVarChar,
       },
       {
         name: "AccessedCountryCode",
-        value: data.accessedCountryCode,
+        value: null,
         type: sql.NVarChar,
       },
       {
         name: "EventDate",
-        value: data.eventDate,
+        value: null,
         type: sql.Date,
       },
       {
         name: "EventTime",
-        value: data.eventTime,
+        value: null,
         type: sql.VarChar,
       },
       {
         name: "ComplaintChannelId",
-        value: data.complaintChannelId,
+        value: null,
         type: sql.Int,
       },
       {
         name: "TransactionTypeId",
-        value: data.transactionTypeId,
+        value: null,
         type: sql.Int,
       },
       {
         name: "TransactionTypeOther",
-        value: data.transactionTypeOther,
+        value: null,
         type: sql.NVarChar,
       },
       {
         name: "TransactionAmount",
-        value: data.transactionAmount,
+        value: null,
         type: sql.Numeric,
       },
       {
         name: "FrozenHeldAmount",
-        value: data.frozenHeldAmount,
+        value: null,
         type: sql.Numeric,
       },
       {
         name: "UnRefundedUnFrozenUnHGeldAmount",
-        value: data.unRefundedUnFrozenUnHeldAmount,
+        value: null,
         type: sql.Numeric,
       },
       {
         name: "BeneficiaryID",
-        value: data.beneficiaryId,
+        value: null,
         type: sql.NVarChar,
       },
       {
         name: "BeneficiaryEntityId",
-        value: data.beneficiaryEntityId,
+        value: null,
         type: sql.Int,
       },
       {
         name: "BeneficiaryEntityOther",
-        value: data.beneficiaryEntityOther,
+        value: null,
         type: sql.NVarChar,
       },
       {
         name: "BeneficiaryPossessionTypeId",
-        value: data.beneficiaryPossessionTypeId,
+        value: null,
         type: sql.Int,
       },
       {
         name: "PossessionID",
-        value: data.possessionId,
+        value: null,
         type: sql.NVarChar,
       },
       {
         name: "IsDraft",
-        value: data.isDraft,
+        value: null,
         type: sql.Bit,
       },
       {
         name: "LoggedInUserID",
-        value: data.loggedInUserID,
+        value: null,
         type: sql.NVarChar,
       },
       {
         name: "CreateSource",
-        value: data.createSource,
+        value: null,
         type: sql.VarChar,
       },
       {
         name: "BatchID",
-        value: data.batchId,
+        value: null,
         type: sql.UniqueIdentifier,
       },
       {
@@ -444,6 +444,153 @@ export const getOne = async (data) => {
       {
         name: "Action",
         value: "SELECT",
+        type: sql.VarChar,
+      },
+    ];
+
+    const pool = sql.pool;
+    const result1 = await pool.request();
+    params.forEach((param) =>
+      result1.input(param.name, param.type, param.value)
+    );
+    const result = await result1.execute("uspFraudCaseDirectChannel_CRUD");
+    return result.recordset;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const getAll = async () => {
+  try {
+    const params = [
+      {
+        name: "CaseDirectChannelID",
+        value: null,
+        type: sql.Int,
+      },
+      {
+        name: "SAMACaseSerialNumber",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "BanksCaseSerialNumber",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "TransactionID",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "TrustedDevice",
+        value: null,
+        type: sql.Int,
+      },
+      {
+        name: "ApplicationID",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "DeviceID",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "AccessedCountryCode",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "EventDate",
+        value: null,
+        type: sql.Date,
+      },
+      {
+        name: "EventTime",
+        value: null,
+        type: sql.VarChar,
+      },
+      {
+        name: "ComplaintChannelId",
+        value: null,
+        type: sql.Int,
+      },
+      {
+        name: "TransactionTypeId",
+        value: null,
+        type: sql.Int,
+      },
+      {
+        name: "TransactionTypeOther",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "TransactionAmount",
+        value: null,
+        type: sql.Numeric,
+      },
+      {
+        name: "FrozenHeldAmount",
+        value: null,
+        type: sql.Numeric,
+      },
+      {
+        name: "UnRefundedUnFrozenUnHGeldAmount",
+        value: null,
+        type: sql.Numeric,
+      },
+      {
+        name: "BeneficiaryID",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "BeneficiaryEntityId",
+        value: null,
+        type: sql.Int,
+      },
+      {
+        name: "BeneficiaryEntityOther",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "BeneficiaryPossessionTypeId",
+        value: null,
+        type: sql.Int,
+      },
+      {
+        name: "PossessionID",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "IsDraft",
+        value: null,
+        type: sql.Bit,
+      },
+      {
+        name: "LoggedInUserID",
+        value: null,
+        type: sql.NVarChar,
+      },
+      {
+        name: "CreateSource",
+        value: null,
+        type: sql.VarChar,
+      },
+      {
+        name: "BatchID",
+        value: null,
+        type: sql.UniqueIdentifier,
+      },
+      {
+        name: "Action",
+        value: "SELECT ALL",
         type: sql.VarChar,
       },
     ];
