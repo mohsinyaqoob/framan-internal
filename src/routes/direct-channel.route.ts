@@ -2,11 +2,13 @@ import express from "express";
 import {
   addOneDirectChannel,
   getDirectChannels,
-} from "../controllers/channel.controller";
+  updateOneDirectChannel,
+} from "../controllers/direct-channel.controller";
 
 const router = express.Router();
 
-router.post("/get-all", getDirectChannels);
+// router.post("/get-all", getDirectChannels);
 router.post("/add", addOneDirectChannel);
+router.post("/update", updateOneDirectChannel);
 
 export const DirectChannelRouter = router;

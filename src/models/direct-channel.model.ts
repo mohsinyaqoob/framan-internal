@@ -166,139 +166,149 @@ export const addOne = async (data) => {
   }
 };
 
-export const updateOne = async () => {
+export const updateOne = async (data) => {
   try {
     const params = [
       {
         name: "CaseDirectChannelID",
-        value: null,
-        type: sql.VarChar,
+        value: data.caseDirectChannelId,
+        type: sql.Int,
       },
       {
         name: "SAMACaseSerialNumber",
-        value: null,
-        type: sql.VarChar,
+        value: data.samaCaseSerialNumber,
+        type: sql.NVarChar,
       },
       {
         name: "BanksCaseSerialNumber",
-        value: null,
-        type: sql.VarChar,
+        value: data.banksCaseSerialNumber,
+        type: sql.NVarChar,
       },
       {
         name: "TransactionID",
-        value: null,
-        type: sql.VarChar,
+        value: data.transactionId,
+        type: sql.NVarChar,
       },
       {
         name: "TrustedDevice",
-        value: null,
-        type: sql.VarChar,
+        value: data.trustedDevice,
+        type: sql.Int,
       },
       {
         name: "ApplicationID",
-        value: null,
-        type: sql.VarChar,
+        value: data.applicationId,
+        type: sql.NVarChar,
       },
       {
         name: "DeviceID",
-        value: null,
-        type: sql.VarChar,
+        value: data.deviceId,
+        type: sql.NVarChar,
       },
       {
         name: "AccessedCountryCode",
-        value: null,
-        type: sql.VarChar,
+        value: data.accessedCountryCode,
+        type: sql.NVarChar,
       },
       {
         name: "EventDate",
-        value: null,
-        type: sql.VarChar,
+        value: data.eventDate,
+        type: sql.Date,
       },
       {
         name: "EventTime",
-        value: null,
+        value: data.eventTime,
         type: sql.VarChar,
       },
       {
         name: "ComplaintChannelId",
-        value: null,
-        type: sql.VarChar,
+        value: data.complaintChannelId,
+        type: sql.Int,
       },
       {
         name: "TransactionTypeId",
-        value: null,
-        type: sql.VarChar,
+        value: data.transactionTypeId,
+        type: sql.Int,
       },
       {
         name: "TransactionTypeOther",
-        value: null,
-        type: sql.VarChar,
+        value: data.transactionTypeOther,
+        type: sql.NVarChar,
       },
       {
         name: "TransactionAmount",
-        value: null,
-        type: sql.VarChar,
+        value: data.transactionAmount,
+        type: sql.Numeric,
       },
       {
         name: "FrozenHeldAmount",
-        value: null,
-        type: sql.VarChar,
+        value: data.frozenHeldAmount,
+        type: sql.Numeric,
       },
       {
         name: "UnRefundedUnFrozenUnHGeldAmount",
-        value: null,
-        type: sql.VarChar,
+        value: data.unRefundedUnFrozenUnHeldAmount,
+        type: sql.Numeric,
       },
       {
         name: "BeneficiaryID",
-        value: null,
-        type: sql.VarChar,
+        value: data.beneficiaryId,
+        type: sql.NVarChar,
       },
       {
         name: "BeneficiaryEntityId",
-        value: null,
-        type: sql.VarChar,
+        value: data.beneficiaryEntityId,
+        type: sql.Int,
       },
       {
         name: "BeneficiaryEntityOther",
-        value: null,
-        type: sql.VarChar,
+        value: data.beneficiaryEntityOther,
+        type: sql.NVarChar,
       },
       {
         name: "BeneficiaryPossessionTypeId",
-        value: null,
-        type: sql.VarChar,
+        value: data.beneficiaryPossessionTypeId,
+        type: sql.Int,
       },
       {
         name: "PossessionID",
-        value: null,
-        type: sql.VarChar,
+        value: data.possessionId,
+        type: sql.NVarChar,
       },
       {
         name: "IsDraft",
-        value: null,
-        type: sql.VarChar,
+        value: data.isDraft,
+        type: sql.Bit,
       },
       {
         name: "LoggedInUserID",
-        value: null,
-        type: sql.VarChar,
+        value: data.loggedInUserID,
+        type: sql.NVarChar,
       },
       {
         name: "CreateSource",
-        value: null,
+        value: data.createSource,
         type: sql.VarChar,
       },
       {
         name: "BatchID",
-        value: null,
-        type: sql.VarChar,
+        value: data.batchId,
+        type: sql.UniqueIdentifier,
       },
       {
         name: "Action",
-        value: null,
+        value: "UPDATE",
         type: sql.VarChar,
       },
     ];
-  } catch (error) {}
+
+    const pool = sql.pool;
+    const result1 = await pool.request();
+    params.forEach((param) =>
+      result1.input(param.name, param.type, param.value)
+    );
+    const result = await result1.execute("uspFraudCaseDirectChannel_CRUD");
+    return result.recordset;
+  } catch (error) {
+    throw new Error(error);
+  }
 };
