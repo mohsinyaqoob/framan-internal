@@ -4,6 +4,7 @@ import {
   deleteFraudCase,
   getAllFraudCases,
   getOneFraudCase,
+  searchFraudCases,
   updateFraudCase,
 } from "../controllers/fraud-cases.controller";
 
@@ -14,5 +15,6 @@ router.post("/get-all", getAllFraudCases);
 router.post("/add", addFraudCase);
 router.post("/update", updateFraudCase);
 router.post("/delete", deleteFraudCase);
+router.post("/search-fraud-cases", searchFraudCases);
 
 export const FraudCasesRouter = router;

@@ -191,3 +191,64 @@ export const deleteOneFraudCase = async (
     throw new Error(error);
   }
 };
+
+export const searchFraudCasesModel = async (data) => {
+  try {
+    const params = [
+      {
+        name: "StartDate",
+        value: data.startDate,
+        type: sql.Date,
+      },
+      {
+        name: "EndDate",
+        value: data.startDate,
+        type: sql.Date,
+      },
+      {
+        name: "SAMACaseSerialNumber",
+        value: data.startDate,
+        type: sql.NVarChar,
+      },
+      {
+        name: "BanksCaseSerialNumber",
+        value: data.startDate,
+        type: sql.NVarChar,
+      },
+      {
+        name: "FraudMethodId",
+        value: data.startDate,
+        type: sql.Int,
+      },
+      {
+        name: "MemberID",
+        value: data.startDate,
+        type: sql.Int,
+      },
+      {
+        name: "ClientTypeID",
+        value: data.startDate,
+        type: sql.Int,
+      },
+      {
+        name: "DirectChannelId",
+        value: data.startDate,
+        type: sql.Int,
+      },
+      {
+        name: "SearchTerm",
+        value: data.startDate,
+        type: sql.NVarChar,
+      },
+    ];
+    const pool = sql.pool;
+    const result1 = await pool.request();
+    params.forEach((param) =>
+      result1.input(param.name, param.type, param.value)
+    );
+    const result = await result1.execute("uspFraudCase_ListFilter");
+    return result.recordset;
+  } catch (error) {
+    throw new Error(error);
+  }
+};

@@ -5,9 +5,11 @@ import {
   addOne,
   updateOne,
   deleteOneFraudCase,
+  searchFraudCasesModel,
 } from "../models/fraud-case.model";
 import {
   isValidAddFraudRequest,
+  isValidSearchFraudCasesRequest,
   isValidUpdateFraudRequest,
 } from "../utils/validate.util";
 
@@ -165,6 +167,33 @@ export const deleteFraudCase = async (req, res) => {
     });
   } catch (error) {
     console.log(error.message);
+    res.status(500).json({ status: 1, data: { message: error.message } });
+  }
+};
+
+export const searchFraudCases = async (req, res) => {
+  try {
+    const data = req.body;
+    const { isValid, errors } = isValidSearchFraudCasesRequest(data);
+
+    if (!isValid) {
+      return res.status(400).json({
+        status: 1,
+        data: {
+          message: "Please provide all required params",
+          errors,
+        },
+      });
+    }
+
+    const fraudCases = await searchFraudCasesModel(data);
+    res.status(200).json({
+      status: 0,
+      data: {
+        fraudCases,
+      },
+    });
+  } catch (error) {
     res.status(500).json({ status: 1, data: { message: error.message } });
   }
 };
