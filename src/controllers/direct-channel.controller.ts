@@ -16,12 +16,21 @@ export const getDirectChannels = async (req: Request, res: Response) => {
   try {
     const directChannels = await _getAll();
     res.status(200).json({
-      status: 0,
-      data: { count: directChannels.length, directChannels },
+      token: req.body.token,
+      userData: {
+        status: 0,
+        data: { count: directChannels.length, directChannels },
+      },
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ status: 1, data: { message: error.message } });
+    res.status(500).json({
+      token: req.body.token,
+      userData: {
+        status: 1,
+        data: { message: error.message },
+      },
+    });
   }
 };
 
@@ -31,10 +40,13 @@ export const addOneDirectChannel = async (req, res) => {
     const { isValid, errors } = isValidAddOneDirectChannel(data);
     if (!isValid) {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: "Please provide all required params",
-          errors,
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: "Please provide all required params",
+            errors,
+          },
         },
       });
     }
@@ -46,23 +58,35 @@ export const addOneDirectChannel = async (req, res) => {
     // String comparison is highly error-prone
     if (directChannel.ActionStatus !== "Inserted") {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: directChannel.ActionMessage,
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: directChannel.ActionMessage,
+          },
         },
       });
     }
 
     res.status(200).json({
-      status: 0,
-      data: {
-        message: directChannel.ActionMessage,
-        directChannel,
+      token: req.body.token,
+      userData: {
+        status: 0,
+        data: {
+          message: directChannel.ActionMessage,
+          directChannel,
+        },
       },
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ status: 1, data: { message: error.message } });
+    res.status(500).json({
+      token: req.body.token,
+      userData: {
+        status: 1,
+        data: { message: error.message },
+      },
+    });
   }
 };
 
@@ -72,10 +96,13 @@ export const updateOneDirectChannel = async (req, res) => {
     const { isValid, errors } = isValidUpdateOneDirectChannel(data);
     if (!isValid) {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: "Please provide all required params",
-          errors,
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: "Please provide all required params",
+            errors,
+          },
         },
       });
     }
@@ -87,23 +114,35 @@ export const updateOneDirectChannel = async (req, res) => {
     // String comparison is highly error-prone
     if (accountDetail.ActionStatus !== "Updated") {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: accountDetail.ActionMessage,
+        token: req.user.token,
+        userData: {
+          status: 1,
+          data: {
+            message: accountDetail.ActionMessage,
+          },
         },
       });
     }
 
     res.status(200).json({
-      status: 0,
-      data: {
-        message: accountDetail.ActionMessage,
-        accountDetail,
+      token: req.body.token,
+      userData: {
+        status: 0,
+        data: {
+          message: accountDetail.ActionMessage,
+          accountDetail,
+        },
       },
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ status: 1, data: { message: error.message } });
+    res.status(500).json({
+      token: req.body.token,
+      userData: {
+        status: 1,
+        data: { message: error.message },
+      },
+    });
   }
 };
 
@@ -113,10 +152,13 @@ export const getOneDirectChannel = async (req, res) => {
     const { isValid, errors } = isValidGetOneDirectChanel(data);
     if (!isValid) {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: "Please provide all required params",
-          errors,
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: "Please provide all required params",
+            errors,
+          },
         },
       });
     }
@@ -124,14 +166,23 @@ export const getOneDirectChannel = async (req, res) => {
     const directChannel = await getOne(data);
 
     res.status(200).json({
-      status: 0,
-      data: {
-        directChannel,
+      token: req.body.token,
+      userData: {
+        status: 0,
+        data: {
+          directChannel,
+        },
       },
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ status: 1, data: { message: error.message } });
+    res.status(500).json({
+      token: req.body.token,
+      userData: {
+        status: 1,
+        data: { message: error.message },
+      },
+    });
   }
 };
 
@@ -140,13 +191,22 @@ export const getAllDirectChannels = async (req, res) => {
     const directChannels = await getAll();
 
     res.status(200).json({
-      status: 0,
-      data: {
-        directChannels,
+      token: req.body.token,
+      userData: {
+        status: 0,
+        data: {
+          directChannels,
+        },
       },
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ status: 1, data: { message: error.message } });
+    res.status(500).json({
+      token: req.body.token,
+      userData: {
+        status: 1,
+        data: { message: error.message },
+      },
+    });
   }
 };

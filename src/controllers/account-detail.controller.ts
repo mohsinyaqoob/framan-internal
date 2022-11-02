@@ -18,10 +18,13 @@ export const addAccountDetail = async (req, res) => {
     const { isValid, errors } = isValidAddOneAccountDetailRequest(data);
     if (!isValid) {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: "Please provide all required params",
-          errors,
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: "Please provide all required params",
+            errors,
+          },
         },
       });
     }
@@ -33,22 +36,34 @@ export const addAccountDetail = async (req, res) => {
     // String comparison is highly error-prone
     if (accountDetail.ActionStatus !== "Inserted") {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: accountDetail.ActionMessage,
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: accountDetail.ActionMessage,
+          },
         },
       });
     }
 
     res.status(200).json({
-      status: 0,
-      data: {
-        message: accountDetail.ActionMessage,
-        accountDetail,
+      token: req.body.token,
+      userData: {
+        status: 0,
+        data: {
+          message: accountDetail.ActionMessage,
+          accountDetail,
+        },
       },
     });
   } catch (error) {
-    res.status(500).json({ status: 1, data: { message: error.message } });
+    res.status(500).json({
+      token: req.body.token,
+      userData: {
+        status: 1,
+        data: { message: error.message },
+      },
+    });
   }
 };
 
@@ -58,10 +73,13 @@ export const updateAccountDetail = async (req, res) => {
     const { isValid, errors } = isValidUpdateOneAccountDetailRequest(data);
     if (!isValid) {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: "Please provide all required params",
-          errors,
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: "Please provide all required params",
+            errors,
+          },
         },
       });
     }
@@ -73,23 +91,35 @@ export const updateAccountDetail = async (req, res) => {
     // String comparison is highly error-prone
     if (accountDetail.ActionStatus !== "Updated") {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: accountDetail.ActionMessage,
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: accountDetail.ActionMessage,
+          },
         },
       });
     }
 
     res.status(200).json({
-      status: 0,
-      data: {
-        message: accountDetail.ActionMessage,
-        accountDetail,
+      token: req.body.token,
+      userData: {
+        status: 0,
+        data: {
+          message: accountDetail.ActionMessage,
+          accountDetail,
+        },
       },
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ status: 1, data: { message: error.message } });
+    res.status(500).json({
+      token: req.body.token,
+      userData: {
+        status: 1,
+        data: { message: error.message },
+      },
+    });
   }
 };
 
@@ -99,10 +129,13 @@ export const deleteAccountDetail = async (req, res) => {
     const { isValid, errors } = isValidDeleteAccountDetailRequest(data);
     if (!isValid) {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: "Please provide all required params",
-          errors,
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: "Please provide all required params",
+            errors,
+          },
         },
       });
     }
@@ -110,14 +143,23 @@ export const deleteAccountDetail = async (req, res) => {
     const deletedAccountDetails = await deleteOne(data);
 
     res.status(200).json({
-      status: 0,
-      data: {
-        deletedAccountDetails,
+      token: req.body.token,
+      userData: {
+        status: 0,
+        data: {
+          deletedAccountDetails,
+        },
       },
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ status: 1, data: { message: error.message } });
+    res.status(500).json({
+      token: req.body.token,
+      userData: {
+        status: 1,
+        data: { message: error.message },
+      },
+    });
   }
 };
 
@@ -126,14 +168,23 @@ export const getAllAccountDetails = async (req, res) => {
     const accountDetails = await getAll();
 
     res.status(200).json({
-      status: 0,
-      data: {
-        accountDetails,
+      token: req.body.token,
+      userData: {
+        status: 0,
+        data: {
+          accountDetails,
+        },
       },
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ status: 1, data: { message: error.message } });
+    res.status(500).json({
+      token: req.body.token,
+      userData: {
+        status: 1,
+        data: { message: error.message },
+      },
+    });
   }
 };
 
@@ -143,10 +194,13 @@ export const getOneAccountDetail = async (req, res) => {
     const { isValid, errors } = isValidGetOneAccountDetailsRequest(data);
     if (!isValid) {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: "Please provide all required params",
-          errors,
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: "Please provide all required params",
+            errors,
+          },
         },
       });
     }
@@ -154,13 +208,22 @@ export const getOneAccountDetail = async (req, res) => {
     const accountDetail = await getOne(data);
 
     res.status(200).json({
-      status: 0,
-      data: {
-        accountDetail,
+      token: req.body.token,
+      userData: {
+        status: 0,
+        data: {
+          accountDetail,
+        },
       },
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ status: 1, data: { message: error.message } });
+    res.status(500).json({
+      token: req.body.token,
+      userData: {
+        status: 1,
+        data: { message: error.message },
+      },
+    });
   }
 };

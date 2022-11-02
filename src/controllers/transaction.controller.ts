@@ -7,17 +7,23 @@ export const getTransactionTypes = async (req: Request, res: Response) => {
     const { directChannelId } = req.body;
     if (!directChannelId) {
       return res.status(500).json({
-        status: 1,
-        data: { message: "Please provide directChannelID" },
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: { message: "Please provide directChannelID" },
+        },
       });
     }
 
     const directChannel = await getDirectChannelById(directChannelId);
     if (!directChannel.length) {
       return res.status(500).json({
-        status: 1,
-        data: {
-          message: "Invalid directChannelId provided",
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: "Invalid directChannelId provided",
+          },
         },
       });
     }
@@ -27,11 +33,20 @@ export const getTransactionTypes = async (req: Request, res: Response) => {
     );
 
     res.status(200).json({
-      status: 0,
-      data: { count: transactionTypes.length, transactionTypes },
+      token: req.body.token,
+      userData: {
+        status: 0,
+        data: { count: transactionTypes.length, transactionTypes },
+      },
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ status: 1, data: { message: error.message } });
+    res.status(500).json({
+      token: req.body.token,
+      userData: {
+        status: 1,
+        data: { message: error.message },
+      },
+    });
   }
 };

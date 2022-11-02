@@ -18,10 +18,13 @@ export const addClientInfo = async (req, res) => {
     const { isValid, errors } = isValidAddClientInfoRequest(data);
     if (!isValid) {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: "Please provide all required params",
-          errors,
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: "Please provide all required params",
+            errors,
+          },
         },
       });
     }
@@ -33,22 +36,34 @@ export const addClientInfo = async (req, res) => {
     // String comparison is highly error-prone
     if (clientInfo.ActionStatus !== "Inserted") {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: clientInfo.ActionMessage,
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: clientInfo.ActionMessage,
+          },
         },
       });
     }
 
     res.status(200).json({
-      status: 0,
-      data: {
-        message: clientInfo.ActionMessage,
-        clientInfo,
+      token: req.body.token,
+      userData: {
+        status: 0,
+        data: {
+          message: clientInfo.ActionMessage,
+          clientInfo,
+        },
       },
     });
   } catch (error) {
-    res.status(500).json({ status: 1, data: { message: error.message } });
+    res.status(500).json({
+      token: req.body.token,
+      userData: {
+        status: 1,
+        data: { message: error.message },
+      },
+    });
   }
 };
 
@@ -56,11 +71,20 @@ export const getAllClientInfo = async (req, res) => {
   try {
     const clientInfo = await getAll();
     res.status(200).json({
-      status: 0,
-      data: { count: clientInfo.length, clientInfo },
+      token: req.body.token,
+      userData: {
+        status: 0,
+        data: { count: clientInfo.length, clientInfo },
+      },
     });
   } catch (error) {
-    res.status(500).json({ status: 1, data: { message: error.message } });
+    res.status(500).json({
+      token: req.body.token,
+      userData: {
+        status: 1,
+        data: { message: error.message },
+      },
+    });
   }
 };
 
@@ -70,10 +94,13 @@ export const updateClientInfo = async (req, res) => {
     const { isValid, errors } = isValidUpdateClientInfoRequest(data);
     if (!isValid) {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: "Please provide all required params",
-          errors,
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: "Please provide all required params",
+            errors,
+          },
         },
       });
     }
@@ -85,23 +112,35 @@ export const updateClientInfo = async (req, res) => {
     // String comparison is highly error-prone
     if (clientInfo.ActionStatus !== "Updated") {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: clientInfo.ActionMessage,
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: clientInfo.ActionMessage,
+          },
         },
       });
     }
 
     res.status(200).json({
-      status: 0,
-      data: {
-        message: clientInfo.ActionMessage,
-        clientInfo,
+      token: req.body.token,
+      userData: {
+        status: 0,
+        data: {
+          message: clientInfo.ActionMessage,
+          clientInfo,
+        },
       },
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ status: 1, data: { message: error.message } });
+    res.status(500).json({
+      token: req.body.token,
+      userData: {
+        status: 1,
+        data: { message: error.message },
+      },
+    });
   }
 };
 
@@ -112,10 +151,13 @@ export const getOneClientInfo = async (req, res) => {
 
     if (!isValid) {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: "Please provide all required params",
-          errors,
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: "Please provide all required params",
+            errors,
+          },
         },
       });
     }
@@ -123,14 +165,23 @@ export const getOneClientInfo = async (req, res) => {
     const clientInfo: any = await getOne(data);
 
     res.status(200).json({
-      status: 0,
-      data: {
-        clientInfo,
+      token: req.body.token,
+      userData: {
+        status: 0,
+        data: {
+          clientInfo,
+        },
       },
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ status: 1, data: { message: error.message } });
+    res.status(500).json({
+      token: req.body.token,
+      userData: {
+        status: 1,
+        data: { message: error.message },
+      },
+    });
   }
 };
 
@@ -141,10 +192,13 @@ export const deleteOneClientInfo = async (req, res) => {
 
     if (!isValid) {
       return res.status(400).json({
-        status: 1,
-        data: {
-          message: "Please provide all required params",
-          errors,
+        token: req.body.token,
+        userData: {
+          status: 1,
+          data: {
+            message: "Please provide all required params",
+            errors,
+          },
         },
       });
     }
@@ -152,13 +206,22 @@ export const deleteOneClientInfo = async (req, res) => {
     const clientInfo: any = await deleteOne(data);
 
     res.status(200).json({
-      status: 0,
-      data: {
-        clientInfo,
+      token: req.body.token,
+      userData: {
+        status: 0,
+        data: {
+          clientInfo,
+        },
       },
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ status: 1, data: { message: error.message } });
+    res.status(500).json({
+      token: req.body.token,
+      userData: {
+        status: 1,
+        data: { message: error.message },
+      },
+    });
   }
 };
